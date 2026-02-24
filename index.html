@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="kk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Миланаға ❤️</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --primary-pink: #ff6b95;
+            --deep-purple: #2d1b4e;
+            --glass: rgba(255, 255, 255, 0.1);
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: radial-gradient(ellipse at bottom, #1b2735 0%, #090a0f 100%);
+            color: white;
+            overflow-x: hidden;
+            min-height: 100vh;
+            position: relative;
+        }
+
+        /* --- ФОН: Статичные мерцающие звезды --- */
+        .stars {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            z-index: -2; pointer-events: none;
+            background-image: 
+                radial-gradient(2px 2px at 20px 30px, #eee, rgba(0,0,0,0)),
+                radial-gradient(2px 2px at 40px 70px, #fff, rgba(0,0,0,0)),
+                radial-gradient(1px 1px at 90px 40px, #fff, rgba(0,0,0,0));
+            background-repeat: repeat; background-size: 200px 200px;
+            animation: twinkle 4s infinite; opacity: 0.6;
+        }
+
+        @keyframes twinkle { 0% { opacity: 0.5; } 50% { opacity: 0.8; } 100% { opacity: 0.5; } }
+
+        /* --- НОВОЕ: Падающие звезды (Метеоры) --- */
+        .meteor-container {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            z-index: -1; pointer-events: none; overflow: hidden;
+        }
+
+        .meteor {
+            position: absolute;
+            top: 50%; left: 50%;
+            width: 4px; height: 4px;
+            background: #fff;
+            border-radius: 50%;
+            box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.1), 0 0 0 8px rgba(255, 255, 255, 0.1), 0 0 20px rgba(255, 255, 255, 1);
+            animation: meteor 3s linear infinite;
+            opacity: 0;
+        }
+
+        .meteor::before {
+            content: ''; position: absolute; top: 50%; transform: translateY(-50%);
+            width: 300px; height: 1px;
+            background: linear-gradient(90deg, #fff, transparent);
+        }
+
+        @keyframes meteor {
+            0% { transform: rotate(215deg) translateX(0); opacity: 1; }
+            70% { opacity: 1; }
+            100% { transform: rotate(215deg) translateX(-1000px); opacity: 0; }
+        }
+
+        /* --- Музыка кнопкасы --- */
+        .music-control { position: fixed; top: 20px; right: 20px; z-index: 1000; }
+        .music-btn {
+            background: var(--primary-pink); border: none; width: 50px; height: 50px; border-radius: 50%;
+            color: white; font-size: 1.2rem; cursor: pointer;
+            box-shadow: 0 0 20px rgba(255, 107, 149, 0.6);
+            animation: pulse-pink 2s infinite; display: flex; align-items: center; justify-content: center;
+            outline: none; transition: transform 0.3s;
+        }
+        .music-btn:active { transform: scale(0.9); }
+        @keyframes pulse-pink {
+            0% { box-shadow: 0 0 0 0 rgba(255, 107, 149, 0.7); }
+            70% { box-shadow: 0 0 0 15px rgba(255, 107, 149, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(255, 107, 149, 0); }
+        }
+
+        /* --- Секции --- */
+        section {
+            min-height: 100vh; display: flex; flex-direction: column;
+            justify-content: center; align-items: center; padding: 40px 20px; text-align: center;
+            opacity: 0; transform: translateY(30px); transition: all 1s ease;
+        }
+        section.visible { opacity: 1; transform: translateY(0); }
+
+        .hero h1 {
+            font-size: 3.5rem; margin: 20px 0; text-transform: uppercase; letter-spacing: 5px;
+            color: var(--primary-pink); text-shadow: 0 0 20px rgba(255, 107, 149, 0.8);
+        }
+        .hero p.subtitle { font-size: 1.2rem; max-width: 600px; line-height: 1.6; color: #eee; font-weight: 300; }
+        .intro-text { color: rgba(255,255,255,0.7); letter-spacing: 2px; text-transform: uppercase; font-size: 0.9rem;}
+        
+        .scroll-down { margin-top: 60px; font-size: 2rem; animation: bounce 2s infinite; color: var(--primary-pink); }
+        @keyframes bounce { 0%, 100% {transform: translateY(0);} 50% {transform: translateY(-10px);} }
+
+        /* --- Карточки --- */
+        .cards-container { display: flex; flex-wrap: wrap; justify-content: center; gap: 30px; max-width: 1200px; }
+        .card {
+            background: var(--glass); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255,255,255,0.1); border-radius: 20px; padding: 40px 30px;
+            width: 320px; transition: all 0.4s ease;
+        }
+        .card:hover { transform: translateY(-10px); background: rgba(255, 107, 149, 0.15); box-shadow: 0 10px 40px rgba(255, 107, 149, 0.2); }
+
+        .card-photo {
+            width: 140px; height: 140px; border-radius: 50%; object-fit: cover;
+            border: 3px solid var(--primary-pink); margin-bottom: 20px;
+            box-shadow: 0 0 15px rgba(255, 107, 149, 0.5);
+        }
+        .card h3 { margin-bottom: 15px; font-size: 1.5rem; color: white; }
+        .card p { font-weight: 300; line-height: 1.6; color: rgba(255,255,255,0.9); }
+
+        /* --- Генератор --- */
+        .support-box {
+            background: var(--glass); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+            padding: 40px; border-radius: 30px; max-width: 600px; width: 90%;
+            border: 2px solid rgba(255, 107, 149, 0.3); box-shadow: 0 0 40px rgba(255, 107, 149, 0.2);
+        }
+        .btn-magic {
+            background: linear-gradient(45deg, #ff6b95, #ff8a00); border: none; padding: 18px 40px;
+            border-radius: 50px; color: white; font-size: 1.1rem; font-weight: bold; cursor: pointer;
+            margin-top: 20px; transition: transform 0.2s; box-shadow: 0 5px 15px rgba(255, 107, 149, 0.4);
+        }
+        .btn-magic:hover { transform: scale(1.05); }
+
+        #daily-message {
+            font-size: 1.4rem; min-height: 80px; display: flex; align-items: center; justify-content: center;
+            font-style: italic; margin: 30px 0; text-shadow: 0 0 10px rgba(255,255,255,0.3);
+        }
+        .fade-in { animation: textFade 0.5s ease-in-out; }
+        @keyframes textFade { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        @media (max-width: 768px) { .hero h1 { font-size: 2.5rem; } .card { width: 100%; } }
+    </style>
+</head>
+<body>
+
+    <audio id="bg-music" loop><source src="song.mp3" type="audio/mpeg"></audio>
+
+    <div class="stars"></div>
+    <div class="meteor-container" id="meteors"></div>
+
+    <div class="music-control">
+        <button class="music-btn" onclick="toggleMusic()" id="musicBtn"><i class="fas fa-play"></i></button>
+    </div>
+
+    <section class="hero visible">
+        <p class="intro-text">ӘЛЕМДЕГІ ЕҢ СҰЛУ ҚЫЗҒА...</p>
+        <h1>МИЛАНА</h1>
+        <p class="subtitle">Сен өзіңнің қаншалықты ғажап екеніңді елестете де алмайсың. Бұл сайт — сенің менің жеке Әлемім, менің Supernova-м екеніңді есіңе салу үшін жасалды. ✨</p>
+        <div class="scroll-down"><i class="fas fa-chevron-down"></i></div>
+    </section>
+
+    <section id="reasons">
+        <h2 style="margin-bottom: 40px; font-size: 2rem; text-transform: uppercase;">НЕГЕ СЕН ЕРЕКШЕСІҢ?</h2>
+        <div class="cards-container">
+            <div class="card">
+                <img src="1.jpg" alt="Ақылдым" class="card-photo">
+                <h3>Ақылдым</h3>
+                <p>Емтихандар — жай ғана уақытша кезең. Сенің білімің мен еңбекқорлығың мәңгі сенімен қалады. Мен сенің қалай тырысып жүргеніңді көріп тұрмын және бұл мені қуантады.</p>
+            </div>
+            <div class="card">
+                <img src="2.jpg" alt="Көркемім" class="card-photo">
+                <h3>Көркемім</h3>
+                <p>Сенің күлкің кез келген түнекті сейілтеді. Сен мен үшін әлемдегі ең сұлу қызсың.</p>
+            </div>
+            <div class="card">
+                <img src="3.jpg" alt="Жаным" class="card-photo">
+                <h3>Жаным</h3>
+                <p>Баға маңызды емес. Мен үшін сен әрқашан бірінші орындасың. Қиындықтың бәрін бірге жеңеміз, мен әрқашан сенің жаныңдамын.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="support">
+        <div class="support-box">
+            <h2>✨ Шұғыл қолдау түймесі ✨</h2>
+            <p style="margin: 20px 0; color: #ddd;">Күшің таусылғанда немесе жай ғана жылулық қажет болғанда осыны бас.</p>
+            <div id="daily-message">Төмендегі түймені бас! 👇</div>
+            <button class="btn-magic" onclick="newMessage()">Махаббат қуатын алу 💖</button>
+        </div>
+    </section>
+
+    <footer style="padding: 30px; text-align: center; color: rgba(255,255,255,0.4); font-size: 0.8rem;">
+        Милана үшін арнайы махаббатпен жасалған. Forever & Always.
+    </footer>
+
+    <script>
+        // --- Метеоры (Падающие звезды) ---
+        function createMeteors() {
+            const container = document.getElementById('meteors');
+            const meteorCount = 4; // Количество метеоров одновременно
+
+            for (let i = 0; i < meteorCount; i++) {
+                const meteor = document.createElement('div');
+                meteor.classList.add('meteor');
+                
+                // Рандомная позиция и задержка
+                meteor.style.left = Math.random() * 100 + 'vw';
+                meteor.style.top = Math.random() * 50 + 'vh';
+                meteor.style.animationDuration = (Math.random() * 2 + 2) + 's'; // 2-4 секунды
+                meteor.style.animationDelay = (Math.random() * 5) + 's';
+
+                container.appendChild(meteor);
+            }
+        }
+        createMeteors();
+
+        // --- Музыка и остальное ---
+        const audio = document.getElementById('bg-music');
+        const musicBtn = document.getElementById('musicBtn');
+        const icon = musicBtn.querySelector('i');
+        let isPlaying = false;
+
+        function toggleMusic() {
+            if (isPlaying) {
+                audio.pause();
+                icon.classList.remove('fa-pause');
+                icon.classList.add('fa-play');
+                musicBtn.style.animation = 'none';
+            } else {
+                audio.play().catch(e => alert("Сайтқа бір рет басып, қайта қосып көрші!"));
+                icon.classList.remove('fa-play');
+                icon.classList.add('fa-pause');
+                musicBtn.style.animation = 'pulse-pink 2s infinite';
+            }
+            isPlaying = !isPlaying;
+        }
+
+        const phrases = [
+            "Сен ойлағаныңнан да ақылдысың! 🧠",
+            "Терең дем ал. Сен бәрін керемет жасап жатырсың. 💨",
+            "Сенің көздерің жұлдыздардан да жарық. ✨",
+            "Мен сенімен шексіз мақтанамын! ❤️",
+            "Емтихан өтеді де кетеді, ал сен — ғажапсың! 😎",
+            "Supernova Love қосып, 1 минут биле! Бұл бұйрық! 💃",
+            "Сен — менің шабытымсың. 🎨",
+            "Бәрі жақсы болады. Мен білемін. 😉",
+            "Шай ішіп, шоколад жеп ал. Сен оған лайықсың. 🍫",
+            "Мен сені қатты жақсы көремін! 💖",
+            "Сенің қолыңнан бәрі келеді! 🔥"
+        ];
+
+        const msgDiv = document.getElementById('daily-message');
+        function newMessage() {
+            msgDiv.classList.remove('fade-in');
+            void msgDiv.offsetWidth;
+            const random = Math.floor(Math.random() * phrases.length);
+            msgDiv.innerHTML = phrases[random];
+            msgDiv.classList.add('fade-in');
+        }
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) entry.target.classList.add('visible');
+            });
+        }, { threshold: 0.1 });
+        document.querySelectorAll('section').forEach(section => observer.observe(section));
+    </script>
+</body>
+</html>
